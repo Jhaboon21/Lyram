@@ -12,7 +12,11 @@ public class PlayerController : MonoBehaviour
 	private float moveInput;
 
 	private Rigidbody2D rb;
+	public Rigidbody2D hornBlast;
+	public Transform shotPoint;
 	private bool facingRight = true;
+	public bool shootside = false;
+	public bool shootup = false;
 
 	//checks whether player is touching ground
 	[SerializeField] private bool isGrounded;
@@ -130,13 +134,27 @@ public class PlayerController : MonoBehaviour
 				isJumping = false;
 			}
 		}
-		if (hasHorn && isPushable)
+		if (hasHorn)
         {
-			if (Input.GetKeyDown(KeyCode.E))
-            {
-				Debug.Log("Used Horn");
-				
-            }
+					if(Input.GetKeyDown(KeyCode.E) && Input.GetButton("Vertical"))
+					{
+						Debug.Log("Shoot Upwards");
+						shootup = true;
+						shootside = false;
+						Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
+					}
+					if (Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Vertical"))
+          {
+						  Debug.Log("Used Horn");
+							shootup = false;
+							shootside = true;
+							Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
+          }
+					if(Input.GetKeyUp(KeyCode.E))
+					{
+						shootup = false;
+						shootside = false;
+					}
         }
     }
 
@@ -144,8 +162,11 @@ public class PlayerController : MonoBehaviour
     void Flip()
     {
 		facingRight = !facingRight;
+		/*
 		Vector3 Scaler = transform.localScale;
 		Scaler.x *= -1;
 		transform.localScale = Scaler;
+		*/
+		transform.Rotate(0f,180f,0f);
     }
 }
