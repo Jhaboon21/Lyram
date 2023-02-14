@@ -39,7 +39,7 @@ public class CameraFollow : MonoBehaviour
             lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
             // The default Z position for camera in a 2D game is -10f.            
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
+            lerpedPosition.y += .7f;
             // If you don't want the slighly delay, use this code.             
             // lerpedPosition = new Vector3(target.position.x, target.position.y, -10f);        
         }*/
@@ -58,7 +58,7 @@ public class CameraFollow : MonoBehaviour
             lerpedPosition = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * 10f);
             // The default Z position for camera in a 2D game is -10f.            
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
+            lerpedPosition.y += .7f;
         }*/
         /*else // move the camera to the player position
         {
@@ -68,7 +68,7 @@ public class CameraFollow : MonoBehaviour
                 lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
                 // The default Z position for camera in a 2D game is -10f.            
                 lerpedPosition.z = -10f;
-                lerpedPosition.y += .3f;
+                lerpedPosition.y += .7f;
             }
         }*/
         if (transform.position != player.transform.position)
@@ -77,7 +77,7 @@ public class CameraFollow : MonoBehaviour
             lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
             // The default Z position for camera in a 2D game is -10f.            
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
+            lerpedPosition.y += .7f;
         }
     }
 
