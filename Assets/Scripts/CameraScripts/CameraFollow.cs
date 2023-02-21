@@ -6,10 +6,10 @@ public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerController playerController;
-    //Bound camera to limits. Since these are public variables,     
-    // make sure you ajust these values in Unity Editor to fit     
-    // the boundry of your scene. Don't just use the default values here.      
-    // Also adjust the camera's "Frame Size" parameter to fit the scene.     
+    //Bound camera to limits. Since these are public variables,
+    // make sure you ajust these values in Unity Editor to fit
+    // the boundry of your scene. Don't just use the default values here.
+    // Also adjust the camera's "Frame Size" parameter to fit the scene.
     public bool limitBounds = true;
     public float left = -5f;
     public float right = 5f;
@@ -25,24 +25,24 @@ public class CameraFollow : MonoBehaviour
 
     private void Awake()
     {
-        // Get the camera component        
+        // Get the camera component
         _camera = GetComponent<Camera>();
         player = GameObject.FindWithTag("Player");
     }
-    // FixedUpdate is called every frame, when the physics are calculated    
-    // You can also put the code in Update(), but putting it in FixedUpdate()    
-    // make the camera motion slightly smoother.     
+    // FixedUpdate is called every frame, when the physics are calculated
+    // You can also put the code in Update(), but putting it in FixedUpdate()
+    // make the camera motion slightly smoother.
     void FixedUpdate()
     {
         /*if (player != null)
         {
-            // Use the Lerp() function so that the camera is slighly behind the character.             
+            // Use the Lerp() function so that the camera is slighly behind the character.
             lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
-            // The default Z position for camera in a 2D game is -10f.            
+            // The default Z position for camera in a 2D game is -10f.
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
-            // If you don't want the slighly delay, use this code.             
-            // lerpedPosition = new Vector3(target.position.x, target.position.y, -10f);        
+            lerpedPosition.y += .7f;
+            // If you don't want the slighly delay, use this code.
+            // lerpedPosition = new Vector3(target.position.x, target.position.y, -10f);
         }*/
         if (player != null)
         {
@@ -55,28 +55,28 @@ public class CameraFollow : MonoBehaviour
     {
         /*if (CamTimer()) // moves camera towards a target position, in this case, the snail spawn point
         {
-            // Use the Lerp() function so that the camera is slighly behind the character.             
+            // Use the Lerp() function so that the camera is slighly behind the character.
             lerpedPosition = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * 10f);
-            // The default Z position for camera in a 2D game is -10f.            
+            // The default Z position for camera in a 2D game is -10f.
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
+            lerpedPosition.y += .7f;
         }*/
         /*else // move the camera to the player position
         {
             if (transform.position != player.transform.position)
             {
-                // Use the Lerp() function so that the camera is slighly behind the character.             
+                // Use the Lerp() function so that the camera is slighly behind the character.
                 lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
-                // The default Z position for camera in a 2D game is -10f.            
+                // The default Z position for camera in a 2D game is -10f.
                 lerpedPosition.z = -10f;
-                lerpedPosition.y += .3f;
+                lerpedPosition.y += .7f;
             }
         }*/
         if (transform.position != player.transform.position)
         {
-            // Use the Lerp() function so that the camera is slighly behind the character.             
+            // Use the Lerp() function so that the camera is slighly behind the character.
             lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
-            // The default Z position for camera in a 2D game is -10f.            
+            // The default Z position for camera in a 2D game is -10f.
             lerpedPosition.z = -10f;
             lerpedPosition.y += lerpedYPosition;
         }
@@ -94,23 +94,23 @@ public class CameraFollow : MonoBehaviour
             return false;
         }
     }*/
-    // LateUpdate is called after all other objects have moved.    
-    // We update the camera position after the character has moved.     
+    // LateUpdate is called after all other objects have moved.
+    // We update the camera position after the character has moved.
     void LateUpdate()
     {
         if (player != null)
         {
-            // Move the camera in the position found previously            
+            // Move the camera in the position found previously
             transform.position = lerpedPosition;
-            // Bounds the camera to the limits (if enabled)            
+            // Bounds the camera to the limits (if enabled)
             if (limitBounds)
             {
                 Vector3 bottomLeft = _camera.ScreenToWorldPoint(Vector3.zero);
                 Vector3 topRight = _camera.ScreenToWorldPoint(new Vector3(_camera.pixelWidth, _camera.pixelHeight));
                 Vector2 screenSize = new Vector2(topRight.x - bottomLeft.x, topRight.y - bottomLeft.y);
-                // Save the current camera position to boundPosition for possible  adjustment. 
-                // If the camera has reached the boundary in a particular direction, 
-                // stop the camera movement in that direction. 
+                // Save the current camera position to boundPosition for possible  adjustment.
+                // If the camera has reached the boundary in a particular direction,
+                // stop the camera movement in that direction.
                 Vector3 boundPosition = transform.position;
                 if (boundPosition.x > right - (screenSize.x / 2f))
                 {
@@ -128,7 +128,7 @@ public class CameraFollow : MonoBehaviour
                 {
                     boundPosition.y = bottom + (screenSize.y / 2f);
                 }
-                // Save the adjusted position to the camera position. 
+                // Save the adjusted position to the camera position.
                 transform.position = boundPosition;
             }
         }
@@ -140,8 +140,8 @@ public class CameraFollow : MonoBehaviour
         CameraTimer = cameraTimer;
     }*/
 
-    // Draw lines to show the boundaries of camera motion using Gizmos so    
-    // the developers can adjust the boundaries and see the result in the Scene view.     
+    // Draw lines to show the boundaries of camera motion using Gizmos so
+    // the developers can adjust the boundaries and see the result in the Scene view.
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
