@@ -7,24 +7,18 @@ public class PlayerController : MonoBehaviour
 {
 	public float speed;			//player speed and jump values
 	public float jumpForce;
-	public float hRadius;		//effect radius of horn
-	public float hPower;		//pushing force of horn
-	private float moveInput;
+	private float moveInput;	//value that determines player direction
 
-	private Rigidbody2D rb;
-	public Rigidbody2D hornBlast;
-	public Transform shotPoint;
+	private Rigidbody2D rb;			//this rigidbody called on start
+	public Rigidbody2D hornBlast;	//the prefab of horn projectile
+	public Transform shotPoint;		//position of where projectiles will instantiate
 	private bool facingRight = true;
-	public bool shootside = false;
-	public bool shootup = false;
 
 	//checks whether player is touching ground
 	[SerializeField] private bool isGrounded;
-	[SerializeField] private bool isPushable;
 	public Transform groundCheck;
 	public float checkRadius;
 	public LayerMask whatIsGround;
-	public LayerMask whatIsPushable;
 
 	//jump checks and extra jump numbers
 	private int extraJump;
@@ -35,12 +29,12 @@ public class PlayerController : MonoBehaviour
 
 	//Sounds
 	private AudioSource audioSrc;
-	public AudioClip[] fluteSounds;	//array of different sound effects when using flute
-	//public AudioClip[] hornSounds;	//array of different sounds for horn
+	public AudioClip[] fluteSounds;		//array of different sound effects when using flute
+	//public AudioClip[] hornSounds;	//array of different sounds for horn. NOT YET IMPLEMENTED
 	public static PlayerController Soundman;
 	private int randomSound;
 
-	public bool hasFlute;
+	public bool hasFlute;		//These must be adjusted later so that only 1 instrument is active at a time
 	public bool hasHorn;
 
     void Start()
@@ -49,10 +43,6 @@ public class PlayerController : MonoBehaviour
 		extraJump = extraJumpValue;
 		rb = GetComponent<Rigidbody2D>();
 		audioSrc = GetComponent<AudioSource>();
-
-		//create circle around player that effects physical objects
-		Vector2 explosionPos = transform.position;
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(explosionPos, hRadius);
     }
 	//plays a random sound within the flutesound array
 	public void PlayFluteSound()
@@ -65,7 +55,6 @@ public class PlayerController : MonoBehaviour
     {
 		//Check using small circle on player feet to check for ground layermask
 		isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-		isPushable = Physics2D.OverlapCircle(rb.position, hRadius, whatIsPushable);
 
 		moveInput = Input.GetAxis("Horizontal");
 		rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
@@ -136,25 +125,20 @@ public class PlayerController : MonoBehaviour
 		}
 		if (hasHorn)
         {
-					if(Input.GetKeyDown(KeyCode.E) && Input.GetButton("Vertical"))
-					{
-						Debug.Log("Shoot Upwards");
-						shootup = true;
-						shootside = false;
-						Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
-					}
-					if (Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Vertical"))
-          {
-						  Debug.Log("Used Horn");
-							shootup = false;
-							shootside = true;
-							Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
-          }
-					if(Input.GetKeyUp(KeyCode.E))
-					{
-						shootup = false;
-						shootside = false;
-					}
+			//This is called when player presses 'E' while holding the up/w key.
+			if(Input.GetKeyDown(KeyCode.E) && Input.GetButton("Vertical"))
+			{
+				//This should cause projectile to shoot upwards. Useful for falling objects or puzzles that are above the player
+				Debug.Log("Shoot Upwards");
+				Instantiate(hornBlast, shotPoint.position, Quaternion.Euler(new Vector3(0,0,90)));
+			}
+			//This is called when just pressing 'E' and not holding the up/w key.
+			if (Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Vertical"))
+			{
+				//This shoots a horizontal projectile in the direction the player is facing.
+				Debug.Log("Used Horn");
+				Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
+			}
         }
     }
 
@@ -162,6 +146,10 @@ public class PlayerController : MonoBehaviour
     void Flip()
     {
 		facingRight = !facingRight;
+
+		//This was the old script to flip player sprite
+		//Now changed to flip the character as a whole which includes the 
+		//position of the spot where projectiles will be fired from
 		/*
 		Vector3 Scaler = transform.localScale;
 		Scaler.x *= -1;

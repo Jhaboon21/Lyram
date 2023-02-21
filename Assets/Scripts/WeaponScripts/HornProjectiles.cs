@@ -4,19 +4,53 @@ using UnityEngine;
 
 public class HornProjectiles : MonoBehaviour
 {
-  [SerializeField] private float speed = 5f;
-  private Rigidbody2D rb;
-  void Start()
-  {
-/*
-    rb = GetComponent<Rigidbody2D>();
-    if(side.shootside)
+    //version 1
+    [SerializeField] private float speed = 5f;
+    private Rigidbody2D rb;
+    void Start()
     {
-      rb.velocity = transform.right * speed;
+        rb = GetComponent<Rigidbody2D>();       //grabs this component on start
+        rb.velocity = transform.right * speed;  //pushes the object in a direction away from player
+
+        Destroy(gameObject, 1f);    //after 1 second, destroy this object
     }
-    else if(side.shootup)
-      rb.velocity = transform.up * speed;
-*/
-    Destroy(gameObject, 1f);
-  }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if(collision.layer == pushable)
+
+
+        //destory this object when hitting something
+        Destroy(gameObject);
+
+        //must add properties when hitting physics objects/puzzles
+    }
+
+    //version 2
+    /*Vector3 minSize;
+    public Vector3 maxSize;
+    [SerializeField] private float scaleRate;
+    [SerializeField] private float duration;
+
+    private void Start()
+    {
+        minSize = transform.localScale;
+        StartCoroutine(Scale(minSize, maxSize, duration)); 
+
+        Destroy(gameObject, 2f);
+    }
+
+    IEnumerator Scale(Vector3 a, Vector3 b, float time)
+    {
+        float timer = 0f;
+        float rate = (1f / time) * scaleRate;
+
+        while(timer < 1f)
+        {
+            timer += Time.deltaTime * rate;
+            transform.localScale = Vector3.Lerp(a, b, timer);
+            yield return null;
+        }
+    }*/
+
 }

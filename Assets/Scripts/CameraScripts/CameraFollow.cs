@@ -15,6 +15,7 @@ public class CameraFollow : MonoBehaviour
     public float right = 5f;
     public float bottom = -5f;
     public float top = 5f;
+    [SerializeField] private float lerpedYPosition = .6f;
     private Vector3 lerpedPosition;
     private Camera _camera;
 
@@ -77,7 +78,7 @@ public class CameraFollow : MonoBehaviour
             lerpedPosition = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 10f);
             // The default Z position for camera in a 2D game is -10f.            
             lerpedPosition.z = -10f;
-            lerpedPosition.y += .3f;
+            lerpedPosition.y += lerpedYPosition;
         }
     }
 
