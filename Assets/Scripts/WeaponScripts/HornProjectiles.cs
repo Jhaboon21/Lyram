@@ -6,7 +6,9 @@ public class HornProjectiles : MonoBehaviour
 {
     //version 1
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float pushForce = 3f;
     private Rigidbody2D rb;
+    private Rigidbody2D colRB;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();       //grabs this component on start
@@ -17,7 +19,12 @@ public class HornProjectiles : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.layer == pushable)
+        if(collision.gameObject.CompareTag("MoveableObj"))
+        {
+            Debug.Log("hit boulder");
+            colRB = collision.gameObject.GetComponent<Rigidbody2D>();
+            colRB.AddForce(transform.right * pushForce);
+        }
 
 
         //destory this object when hitting something

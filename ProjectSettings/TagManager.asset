@@ -5,17 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - MoveableObj
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
   - Pushable
-  - 
-  - 
+  - Instrument
+  - HornProjectile
   - 
   - 
   - 

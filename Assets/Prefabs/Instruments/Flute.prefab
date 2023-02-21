@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2279580442141452779}
   - component: {fileID: 2279580442141452788}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Flute
   m_TagString: Untagged
   m_Icon: {fileID: 0}

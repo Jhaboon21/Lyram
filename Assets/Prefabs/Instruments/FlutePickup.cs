@@ -11,7 +11,14 @@ public class FlutePickup : MonoBehaviour
     {
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
+        {
             player.hasFlute = true;
-        Destroy(gameObject);
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Hit!");
+            //Destroy(gameObject);
+        }
+        
     }
 }
