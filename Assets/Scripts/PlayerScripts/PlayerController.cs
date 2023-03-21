@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 	//Sounds
 	private AudioSource audioSrc;
 	public AudioClip[] fluteSounds;		//array of different sound effects when using flute
-	//public AudioClip[] hornSounds;	//array of different sounds for horn. NOT YET IMPLEMENTED
+	public AudioClip[] hornSounds;	//array of different sounds for horn. NOT YET IMPLEMENTED
 	public static PlayerController Soundman;
 	private int randomSound;
 
@@ -49,6 +49,12 @@ public class PlayerController : MonoBehaviour
     {
 		randomSound = Random.Range(0, 2);
 		audioSrc.PlayOneShot(fluteSounds[randomSound]);
+    }
+
+	public void PlayHornSound()
+    {
+		randomSound = Random.Range(0, hornSounds.Length);
+		audioSrc.PlayOneShot(hornSounds[randomSound]);
     }
 
     private void FixedUpdate()
@@ -131,6 +137,7 @@ public class PlayerController : MonoBehaviour
 				//This should cause projectile to shoot upwards. Useful for falling objects or puzzles that are above the player
 				Debug.Log("Shoot Upwards");
 				Instantiate(hornBlast, shotPoint.position, Quaternion.Euler(new Vector3(0,0,90)));
+				PlayHornSound();
 			}
 			//This is called when just pressing 'E' and not holding the up/w key.
 			if (Input.GetKeyDown(KeyCode.E) && !Input.GetButton("Vertical"))
@@ -138,6 +145,7 @@ public class PlayerController : MonoBehaviour
 				//This shoots a horizontal projectile in the direction the player is facing.
 				Debug.Log("Used Horn");
 				Instantiate(hornBlast, shotPoint.position, shotPoint.rotation);
+				PlayHornSound();
 			}
         }
     }
